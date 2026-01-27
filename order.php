@@ -407,12 +407,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <i class="fas fa-sign-out-alt"></i> Déconnexion
                     </a>
                 <?php else: ?>
-                    <a href="login.php" style="margin-right: 15px; color: #111;">
-                        <i class="fas fa-sign-in-alt"></i> Connexion
-                    </a>
-                    <a href="register.php" style="color: #111;">
-                        <i class="fas fa-user-plus"></i> Inscription
-                    </a>
                 <?php endif; ?>
             </div>
 

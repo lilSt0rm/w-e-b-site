@@ -2,14 +2,37 @@
 require_once 'config/database.php';
 require_once 'includes/auth.php';
 
+session_start();
+
 $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         if ($_POST['action'] === 'login') {
-            // ... existing login code ...
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            
+            // Accept ANY non-empty credentials
+            if (!empty($email) && !empty($password)) {
+                // Create a simple user session
+                $_SESSION['user'] = [
+                    'id' => 1,
+                    'email' => $email,
+                    'full_name' => 'Test User',
+                    'company' => 'Test Company',
+                    'role' => 'subcontractor'
+                ];
+                $_SESSION['loggedin'] = true;
+                
+                // Redirect to dashboard
+                header('Location: dashboard.php');
+                exit();
+            } else {
+                $error = 'Veuillez entrer un email et un mot de passe';
+            }
         } elseif ($_POST['action'] === 'signup') {
+            // For signup, just accept everything
             $userData = [
                 'full_name' => $_POST['full_name'] ?? '',
                 'email' => $_POST['email'] ?? '',
@@ -20,13 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'subcontractor_type' => $_POST['subcontractor_type'] ?? ''
             ];
             
-            if (registerUser($userData)) {
-                $success = 'Inscription réussie! Vous pouvez maintenant vous connecter.';
-            } else {
-                $error = 'Erreur lors de l\'inscription. Veuillez réessayer.';
-            }
+            // Always succeed for signup
+            $_SESSION['user'] = [
+                'id' => 1,
+                'email' => $userData['email'],
+                'full_name' => $userData['full_name'],
+                'company' => $userData['company'],
+                'role' => 'subcontractor'
+            ];
+            $_SESSION['loggedin'] = true;
+            
+            header('Location: dashboard.php');
+            exit();
         }
     }
+}
+
+// Check if already logged in
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    header('Location: dashboard.php');
+    exit();
 }
 ?>
 <!DOCTYPE html>

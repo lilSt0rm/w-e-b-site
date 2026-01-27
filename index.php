@@ -549,13 +549,6 @@ require_once 'config/database.php';
             alert('Page "Impression Grand Format" - En développement. Cette page affichera tous nos produits en grand format.');
         });
 
-        const loginButtons = document.querySelectorAll('.btn-login');
-        loginButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                alert('Page de connexion - En développement');
-            });
-        });
 
         const signupButtons = document.querySelectorAll('.btn-signup');
         signupButtons.forEach(button => {

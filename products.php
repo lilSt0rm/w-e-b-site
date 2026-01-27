@@ -533,19 +533,12 @@ require_once 'config/database.php';
             });
         });
 
-        // Quick order function
-        window.quickOrder = function(productName) {
-            alert(`Commande rapide: ${productName}\n\nVotre produit a été ajouté au panier!\n\nVous pouvez continuer vos achats ou finaliser votre commande.`);
-            
-            // Update cart counter (if exists)
-            const cartCounter = document.querySelector('.cart-counter');
-            if (cartCounter) {
-                let count = parseInt(cartCounter.textContent) || 0;
-                cartCounter.textContent = count + 1;
-                cartCounter.style.display = 'flex';
-            }
-        };
         
+        // Quick Order function - redirect to order page
+        function quickOrder(productName) {
+            window.location.href = 'order.php?product=' + encodeURIComponent(productName);
+        }
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
